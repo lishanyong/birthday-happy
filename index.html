@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ff5a89">
+  <title>生日快乐</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100svh; overflow: hidden; display: grid; place-items: center;
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      color: #fff; background: radial-gradient(circle at 50% 0%, #ffb1c8 0, #ff6794 42%, #8d377f 100%);
+    }
+    .glow { position: fixed; width: 70vmax; height: 70vmax; border-radius: 50%; background: #ffd767; opacity: .18; filter: blur(45px); animation: float 8s ease-in-out infinite; }
+    main { width: min(92vw, 520px); padding: 38px 24px 34px; text-align: center; position: relative; z-index: 1; }
+    .cake { font-size: clamp(86px, 25vw, 130px); line-height: 1; filter: drop-shadow(0 12px 9px #72275966); animation: bounce 2.5s ease-in-out infinite; }
+    h1 { margin: 20px 0 8px; font-size: clamp(42px, 12vw, 64px); letter-spacing: .08em; text-shadow: 0 5px 0 #b33568, 0 10px 20px #66204b55; }
+    p { margin: 0 auto 28px; max-width: 20em; font-size: clamp(17px, 4.6vw, 21px); line-height: 1.8; text-shadow: 0 2px 5px #76295277; }
+    button { appearance: none; border: 0; border-radius: 999px; padding: 15px 26px; color: #ad2e61; background: #fff7be; font: inherit; font-weight: 700; font-size: 17px; box-shadow: 0 7px 0 #d79b57, 0 12px 24px #6b204866; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+    button:active { transform: translateY(5px); box-shadow: 0 2px 0 #d79b57, 0 5px 13px #6b204866; }
+    .note { margin-top: 26px; font-size: 13px; opacity: .83; }
+    .confetti { position: fixed; top: -12px; z-index: 2; width: 10px; height: 18px; border-radius: 4px; pointer-events: none; animation: fall var(--duration) linear forwards; }
+    @keyframes bounce { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(2deg); } }
+    @keyframes float { 50% { transform: translate(12vw, 10vh) scale(1.12); } }
+    @keyframes fall { to { transform: translate(var(--drift), 110vh) rotate(720deg); opacity: 0; } }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <main>
+    <div class="cake" aria-hidden="true">🎂</div>
+    <h1>生日快乐！</h1>
+    <p>愿新的一岁，心之所向，皆如所愿。<br>愿每天都有小惊喜，也有被好好爱着的幸福。</p>
+    <button id="celebrate" type="button">点击收下祝福 ✨</button>
+    <div class="note">愿你眼里有光，脚下有路，生日快乐。</div>
+  </main>
+  <script>
+    const colors = ['#fff4a6', '#79e6d8', '#fae1fa', '#ff8bb1', '#9dc7ff'];
+    function celebrate() {
+      for (let i = 0; i < 90; i++) {
+        const dot = document.createElement('i');
+        dot.className = 'confetti';
+        dot.style.left = Math.random() * 100 + 'vw';
+        dot.style.background = colors[i % colors.length];
+        dot.style.setProperty('--duration', (1.7 + Math.random() * 1.5) + 's');
+        dot.style.setProperty('--drift', ((Math.random() - .5) * 230) + 'px');
+        document.body.append(dot);
+        dot.addEventListener('animationend', () => dot.remove());
+      }
+    }
+    document.getElementById('celebrate').addEventListener('click', celebrate);
+    setTimeout(celebrate, 500);
+  </script>
+</body>
+</html>
